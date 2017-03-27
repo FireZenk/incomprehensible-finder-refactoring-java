@@ -2,25 +2,22 @@ package algorithm;
 
 public class Pair {
 
-	private final Person personOne;
-	private final Person personTwo;
-	long ageDifference;
+	private final Person younger;
+	private final Person older;
+	final long ageDifference;
 
-	Pair(Person personOne, Person personTwo) {
-		this.personOne = personOne;
-		this.personTwo = personTwo;
+	Pair(Person younger, Person older) {
+		this.younger = younger;
+		this.older = older;
+		this.ageDifference = younger != null && older != null
+				? older.time() - younger.time() : 0;
 	}
 
-	Pair withAgeDifference(long ageDifference) {
-		this.ageDifference = ageDifference;
-		return this;
+	public Person personOne() {
+		return younger;
 	}
 
-	public Person getPersonOne() {
-		return personOne;
-	}
-
-	public Person getPersonTwo() {
-		return personTwo;
+	public Person personTwo() {
+		return older;
 	}
 }

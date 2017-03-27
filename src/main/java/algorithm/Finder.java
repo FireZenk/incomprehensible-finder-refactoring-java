@@ -2,6 +2,7 @@ package algorithm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Finder {
 	private final List<Person> people;
@@ -10,8 +11,8 @@ public class Finder {
 		this.people = people;
 	}
 
-	public Pair find(AgeAffinity ageAffinity) {
-		List<Pair> candidates = new ArrayList<Pair>();
+	public Optional<Pair> find(AgeAffinity ageAffinity) {
+		List<Pair> candidates = new ArrayList<>();
 
 		for (int i = 0; i < people.size() - 1; i++) {
 			for (int j = i + 1; j < people.size(); j++) {
@@ -21,33 +22,10 @@ public class Finder {
 				} else {
 					r = new Pair(people.get(j), people.get(i));
 				}
-				r.ageDifference = r.getPersonTwo().time() - r.getPersonOne().time();
 				candidates.add(r);
 			}
 		}
 
-		if (candidates.size() < 1) {
-			return new Pair(null, null);
-		}
-
-		Pair answer = candidates.get(0);
-
-		for (Pair result : candidates) {
-			switch (ageAffinity) {
-				case Closest:
-					if (result.ageDifference < answer.ageDifference) {
-						answer = result;
-					}
-					break;
-
-				case Furthest:
-					if (result.ageDifference > answer.ageDifference) {
-						answer = result;
-					}
-					break;
-			}
-		}
-
-		return answer;
+		return candidates.stream().reduce(ageAffinity::compare);
 	}
 }

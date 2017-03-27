@@ -5,10 +5,11 @@ import java.util.Date;
 public class Person {
 
 	private final String name;
-	private Date birthDate;
+	private final Date birthDate;
 
-	public Person(String name) {
+	public Person(String name, Date birthDate) {
 		this.name = name;
+		this.birthDate = birthDate;
 	}
 
 	Date birthDate() {
@@ -17,11 +18,6 @@ public class Person {
 
 	long time() {
 		return birthDate.getTime();
-	}
-
-	public Person withBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
-		return this;
 	}
 
 	@Override public String toString() {
