@@ -48,8 +48,8 @@ public class FinderTests {
 		Finder finder = new Finder(people);
 
 		Pair result = finder.find(AgeOrder.One);
-		assertEquals(null, result.personOne);
 
+		assertEquals(null, result.personOne);
 		assertEquals(null, result.personTwo);
 	}
 
@@ -120,5 +120,4 @@ public class FinderTests {
 		assertEquals(sue, result.personOne);
 		assertEquals(greg, result.personTwo);
 	}
-
 }
