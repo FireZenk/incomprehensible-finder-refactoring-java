@@ -4,40 +4,28 @@ import java.util.Date;
 
 public class Person {
 
-	private String name;
+	private final String name;
 	private Date birthDate;
 
-	private Person(PersonBuilder personBuilder) {
-		name = personBuilder.name;
-		birthDate = personBuilder.birthDate;
+	public Person(String name) {
+		this.name = name;
 	}
 
-	public String name() {
-		return name;
-	}
-
-	public Date birthDate() {
+	Date birthDate() {
 		return birthDate;
 	}
 
-	public static class PersonBuilder {
+	long time() {
+		return birthDate.getTime();
+	}
 
-		private String name;
-		private Date birthDate;
+	public Person withBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+		return this;
+	}
 
-		public PersonBuilder name(String name) {
-			this.name = name;
-			return this;
-		}
-
-		public PersonBuilder birthDate(Date birthDate) {
-			this.birthDate = birthDate;
-			return this;
-		}
-
-		public Person build() {
-			return new Person(this);
-		}
+	@Override public String toString() {
+		return "Name: " + name + ", birthDate: " + birthDate;
 	}
 }
 

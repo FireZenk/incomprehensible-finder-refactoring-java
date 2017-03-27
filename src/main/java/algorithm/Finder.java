@@ -10,39 +10,38 @@ public class Finder {
 		this.people = people;
 	}
 
-	public Pair find(AgeOrder ageOrder) {
-		List<Pair> tr = new ArrayList<Pair>();
+	public Pair find(AgeAffinity ageAffinity) {
+		List<Pair> candidates = new ArrayList<Pair>();
 
 		for (int i = 0; i < people.size() - 1; i++) {
 			for (int j = i + 1; j < people.size(); j++) {
-				Pair r = new Pair();
+				Pair r;
 				if (people.get(i).birthDate().getTime() < people.get(j).birthDate().getTime()) {
-					r.personOne = people.get(i);
-					r.personTwo = people.get(j);
+					r = new Pair(people.get(i), people.get(j));
 				} else {
-					r.personOne = people.get(j);
-					r.personTwo = people.get(i);
+					r = new Pair(people.get(j), people.get(i));
 				}
-				r.diff = r.personTwo.birthDate().getTime() - r.personOne.birthDate().getTime();
-				tr.add(r);
+				r.ageDifference = r.getPersonTwo().time() - r.getPersonOne().time();
+				candidates.add(r);
 			}
 		}
 
-		if (tr.size() < 1) {
-			return new Pair();
+		if (candidates.size() < 1) {
+			return new Pair(null, null);
 		}
 
-		Pair answer = tr.get(0);
-		for (Pair result : tr) {
-			switch (ageOrder) {
-				case One :
-					if (result.diff < answer.diff) {
+		Pair answer = candidates.get(0);
+
+		for (Pair result : candidates) {
+			switch (ageAffinity) {
+				case Closest:
+					if (result.ageDifference < answer.ageDifference) {
 						answer = result;
 					}
 					break;
 
-				case Two :
-					if (result.diff > answer.diff) {
+				case Furthest:
+					if (result.ageDifference > answer.ageDifference) {
 						answer = result;
 					}
 					break;
